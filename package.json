@@ -1,39 +1,50 @@
 {
-  "name": "checkout-test",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "test:unit": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint"
-  },
-  "dependencies": {
-    "vue": "^3.2.13",
-    "vue-router": "^4.0.3",
-    "vuex": "^4.0.0"
-  },
-  "devDependencies": {
-    "@types/jest": "^27.0.1",
-    "@typescript-eslint/eslint-plugin": "^5.4.0",
-    "@typescript-eslint/parser": "^5.4.0",
-    "@vue/cli-plugin-eslint": "~5.0.0",
-    "@vue/cli-plugin-router": "~5.0.0",
-    "@vue/cli-plugin-typescript": "~5.0.0",
-    "@vue/cli-plugin-unit-jest": "~5.0.0",
-    "@vue/cli-plugin-vuex": "~5.0.0",
-    "@vue/cli-service": "~5.0.0",
-    "@vue/eslint-config-typescript": "^9.1.0",
-    "@vue/test-utils": "^2.0.0-0",
-    "@vue/vue3-jest": "^27.0.0-alpha.1",
-    "babel-jest": "^27.0.6",
-    "eslint": "^7.32.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-vue": "^8.0.3",
-    "jest": "^27.0.5",
-    "prettier": "^2.4.1",
-    "ts-jest": "^27.0.4",
-    "typescript": "~4.5.5"
-  }
+	"name": "checkout-test",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"dev": "nodemon ./server/index.js localhost 3000",
+		"build-server": "webpack",
+		"start": "node server.bundle.js",
+		"serve": "vue-cli-service serve",
+		"build-client": "vue-cli-service build",
+		"test:unit": "vue-cli-service test:unit",
+		"lint": "vue-cli-service lint"
+	},
+	"dependencies": {
+		"@adyen/adyen-web": "^5.25.0",
+		"@adyen/api-library": "^12.0.0",
+		"dotenv": "^16.0.2",
+		"express": "^4.18.1",
+		"uuid": "^9.0.0",
+		"vue": "^3.2.13",
+		"vue-autosize-input": "^0.1.1",
+		"vue-router": "^4.0.3",
+		"vuex": "^4.0.0"
+	},
+	"devDependencies": {
+		"@types/jest": "^27.0.1",
+		"@typescript-eslint/eslint-plugin": "^5.4.0",
+		"@typescript-eslint/parser": "^5.4.0",
+		"@vue/cli-plugin-eslint": "~5.0.0",
+		"@vue/cli-plugin-router": "~5.0.0",
+		"@vue/cli-plugin-typescript": "~5.0.0",
+		"@vue/cli-plugin-unit-jest": "~5.0.0",
+		"@vue/cli-plugin-vuex": "~5.0.0",
+		"@vue/cli-service": "~5.0.0",
+		"@vue/eslint-config-typescript": "^9.1.0",
+		"@vue/test-utils": "^2.0.0-0",
+		"@vue/vue3-jest": "^27.0.0-alpha.1",
+		"babel-jest": "^27.0.6",
+		"consola": "^2.15.3",
+		"eslint": "^7.32.0",
+		"eslint-config-prettier": "^8.3.0",
+		"eslint-plugin-prettier": "^4.0.0",
+		"eslint-plugin-vue": "^8.0.3",
+		"jest": "^27.0.5",
+		"nodemon": "^2.0.4",
+		"prettier": "^2.4.1",
+		"ts-jest": "^27.0.4",
+		"typescript": "~4.5.5"
+	}
 }
