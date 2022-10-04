@@ -19,7 +19,6 @@
 		</div>
 		<div class="flex flex-row">
 			<div class="top-padding largerRow">
-				<img class="full-width" :src="usdaOverview" alt="my-logo" />
 				<CoinDetails />
 			</div>
 			<div class="top-padding smallerRow">
@@ -32,7 +31,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue"
-import Payment from "@/components/PaymentView.vue"
+import Payment from "@/components/PaymentsSidebar.vue"
 import CoinDetails from "@/components/CoinDetails.vue"
 import CoinAmount from "@/components/CoinAmount.vue"
 
@@ -47,7 +46,6 @@ export default defineComponent({
 	data() {
 		return {
 			stableDollar: require("../assets/stable-dollar.svg"),
-			usdaOverview: require("../assets/usda_overview.png"),
 			amount: null
 		}
 	}
@@ -106,10 +104,6 @@ h1 {
 
 .smallerRow {
 	width: 40%;
-}
-
-.full-width {
-	width: 100%;
 }
 
 .subtext {

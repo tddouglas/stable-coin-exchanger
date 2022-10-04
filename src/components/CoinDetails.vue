@@ -1,7 +1,11 @@
 <template>
-	<div class="less-dark">
-		<!--		<h1>Is this rendering</h1>-->
-		<!--		<img :src="chart" alt="asset-chart" />-->
+	<div v-if="haveIFinishedBuildingThis">
+		<p>In Progress</p>
+	</div>
+	<div v-else>
+		<div class="less-dark">
+			<img class="full-width" :src="usdaOverview" alt="my-logo" />
+		</div>
 	</div>
 </template>
 
@@ -11,10 +15,10 @@ import { defineComponent } from "vue"
 export default defineComponent({
 	name: "CoinDetails",
 	components: {},
-	// eslint-disable-next-line @typescript-eslint/no-empty-function
-	mounted() {},
 	data() {
 		return {
+			haveIFinishedBuildingThis: false,
+			usdaOverview: require("../assets/usda_overview.png"),
 			chart: require("../assets/chart.svg")
 		}
 	}
@@ -24,5 +28,9 @@ export default defineComponent({
 <style scoped>
 .less-dark {
 	background: #1c1c1c;
+}
+
+.full-width {
+	width: 100%;
 }
 </style>

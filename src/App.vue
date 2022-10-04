@@ -49,6 +49,7 @@ body {
 
 .max-page-width {
 	max-width: 1000px;
+	width: 100%;
 }
 
 nav {
@@ -62,6 +63,15 @@ nav a {
 
 nav a.router-link-exact-active {
 	color: #42b983;
+}
+
+button {
+	border: none;
+	background: var(--subtext-header-color);
+	color: white;
+	text-align: center;
+	cursor: pointer;
+	border-radius: 4px;
 }
 
 .flex {

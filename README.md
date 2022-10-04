@@ -1,4 +1,4 @@
-# checkout-test
+# Stable Coin Exchanger
 
 ## Project setup
 ```

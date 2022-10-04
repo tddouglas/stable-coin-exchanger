@@ -1,51 +1,70 @@
 <template>
 	<div class="small-margin thin-border padding-bottom">
 		<div>
-			<DetailsButton :selected="true" text="Buy"></DetailsButton>
-			<DetailsButton :selected="false" text="Sell"></DetailsButton>
-			<DetailsButton :selected="false" text="Convert"></DetailsButton>
+			<DetailsButton
+				:selected="true"
+				text="Buy"
+				@click="setPurchaseSection(true)"
+			></DetailsButton>
+			<DetailsButton
+				:selected="false"
+				text="Sell"
+				@click="setPurchaseSection(false)"
+			></DetailsButton>
+			<DetailsButton
+				:selected="false"
+				text="Convert"
+				@click="setPurchaseSection(false)"
+			></DetailsButton>
 		</div>
 		<div class="small-padding">
-			<div class="small-allaround-padding">
-				<span class="input-placeholder">$</span>
-				<input
-					class="amount-input"
-					placeholder="0"
-					:style="{
-						width: inputWidth + 'px',
-						fontSize: inputFontSize + 'px'
-					}"
-					v-model="purchaseAmount"
-					@input="adjustSize"
-				/>
+			<div v-if="showPurchaseSection">
+				<div class="small-allaround-padding">
+					<span class="input-placeholder">$</span>
+					<input
+						class="amount-input"
+						placeholder="0"
+						:style="{
+							width: inputWidth + 'px',
+							fontSize: inputFontSize + 'px'
+						}"
+						v-model="purchaseAmount"
+						@input="adjustSize"
+					/>
+				</div>
+				<div class="padding-bottom">
+					<button
+						class="extra-small-margin small-button button-hover"
+						@click="setPurchaseAmount(5)"
+					>
+						$5
+					</button>
+					<button
+						class="extra-small-margin small-button button-hover"
+						@click="setPurchaseAmount(10)"
+					>
+						$10
+					</button>
+					<button
+						class="extra-small-margin small-button button-hover"
+						@click="setPurchaseAmount(20)"
+					>
+						$20
+					</button>
+				</div>
+				<div>
+					<button
+						class="buy-button button-hover"
+						@click="initPurchase(purchaseAmount)"
+					>
+						Preview Buy
+					</button>
+				</div>
 			</div>
-			<div class="padding-bottom">
-				<button
-					class="extra-small-margin small-button"
-					@click="setPurchaseAmount(5)"
-				>
-					$5
-				</button>
-				<button
-					class="extra-small-margin small-button"
-					@click="setPurchaseAmount(10)"
-				>
-					$10
-				</button>
-				<button
-					class="extra-small-margin small-button"
-					@click="setPurchaseAmount(20)"
-				>
-					$20
-				</button>
-			</div>
-			<div>
-				<button
-					class="buy-button"
-					@click="initPurchase(purchaseAmount)"
-				>
-					Preview Buy
-				</button>
+			<div v-else>
+				<div class="small-allaround-padding">
+					<p>Why would you want to do anything but Buy Adyen Coin?</p>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -66,6 +85,9 @@ export default defineComponent({
 			this.purchaseAmount = value
 			this.inputWidth = 70
 			this.inputFontSize = 62
+		},
+		setPurchaseSection(newVal: boolean) {
+			this.showPurchaseSection = newVal
 		},
 		adjustSize(el: Event) {
 			let target = el.target as HTMLInputElement
@@ -89,7 +111,8 @@ export default defineComponent({
 		return {
 			purchaseAmount: this.modelValue,
 			inputWidth: 35,
-			inputFontSize: 62
+			inputFontSize: 62,
+			showPurchaseSection: true
 		}
 	}
 })
@@ -117,6 +140,10 @@ export default defineComponent({
 	outline: currentcolor none medium;
 	background: var(--background);
 	cursor: inherit;
+}
+
+.button-hover:hover {
+	background: rgb(77, 176, 205);
 }
 
 .input-placeholder {

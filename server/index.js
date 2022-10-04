@@ -1,6 +1,7 @@
 const express = require("express")
 const consola = require("consola")
 const dotenv = require("dotenv")
+const { createProxyMiddleware } = require("http-proxy-middleware")
 const { v4: uuid } = require("uuid")
 const { hmacValidator } = require("@adyen/api-library")
 const { Client, Config, CheckoutAPI } = require("@adyen/api-library")
@@ -8,6 +9,20 @@ const { Client, Config, CheckoutAPI } = require("@adyen/api-library")
 // init app
 const app = express(),
 	port = 3000
+// Configure Proxy - Uncomment with proper proxy
+// app.use(
+// 	"/",
+// 	createProxyMiddleware({
+// 		target: "",
+// 		changeOrigin: true,
+// 		pathRewrite: {
+// 			[`^/api`]: ""
+// 		}
+// 		// headers: { - not sure if this is needed
+// 		// 	"x-API-key": API_KEY[0]
+// 		// }
+// 	})
+// )
 // Parse JSON bodies
 app.use(express.json())
 // Parse URL-encoded bodies
@@ -29,7 +44,6 @@ const checkout = new CheckoutAPI(client)
 
 // Invoke /sessions endpoint
 app.post("/api/sessions", async (req, res) => {
-	const localhost = req.get("host")
 	try {
 		// unique ref for the transaction
 		const orderRef = uuid()

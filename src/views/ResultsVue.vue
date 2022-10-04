@@ -15,31 +15,39 @@
 				/>
 				<img src="../assets/thank-you.svg" class="status-image" alt />
 			</div>
-			<p class="status-message">
-				<span v-if="type === 'error'">
-					Error! Please review response in console and refer to
+			<div class="status-message small-allaround-padding">
+				<div v-if="type === 'success'">
+					<div>
+						Your order has been successfully placed. <br />Please
+						scan below QR Code to collect your coins.
+					</div>
+					<QRCodeGenerator />
+				</div>
+				<div v-else-if="type === 'failed'">
+					The payment was refused. Please try a different payment
+					method or card.
+				</div>
+				<div v-else-if="type === 'pending'">
+					Your order has been received! Payment completion pending.
+				</div>
+				<div v-else>
+					Your order has been successfully placed.
 					<a
 						href="https://docs.adyen.com/development-resources/response-handling"
 						>Response handling.</a
 					>
-				</span>
-				<span v-else-if="type === 'failed'">
-					The payment was refused. Please try a different payment
-					method or card.
-				</span>
-				<span v-else-if="type === 'pending'">
-					Your order has been received! Payment completion pending.
-				</span>
-				<span v-else> Your order has been successfully placed. </span>
-			</p>
+				</div>
+			</div>
 			<router-link to="/">
-				<button class="button">Return Home</button>
+				<button class="button button-size">Return Home</button>
 			</router-link>
 		</div>
 	</div>
 </template>
 
 <script>
+import QRCodeGenerator from "@/components/QRCodeGenerator.vue"
+
 export default {
 	head: {
 		title: "Result"
@@ -49,8 +57,15 @@ export default {
 			type: this.$route.params.type
 		}
 	},
-	asyncData({ route }) {
-		return { type: route.params.page }
+	components: {
+		QRCodeGenerator
 	}
 }
 </script>
+
+<style scoped>
+.button-size {
+	width: 200px;
+	height: 40px;
+}
+</style>
