@@ -118,6 +118,10 @@ button {
 	align-items: center;
 }
 
+.vertical-center-children {
+	justify-content: center;
+}
+
 .half-width {
 	width: 50%;
 }

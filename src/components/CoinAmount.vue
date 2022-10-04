@@ -1,21 +1,46 @@
 <template>
 	<div class="small-margin thin-border padding-bottom">
-		<div>
-			<DetailsButton
-				:selected="true"
-				text="Buy"
-				@click="setPurchaseSection(true)"
-			></DetailsButton>
-			<DetailsButton
-				:selected="false"
-				text="Sell"
-				@click="setPurchaseSection(false)"
-			></DetailsButton>
-			<DetailsButton
-				:selected="false"
-				text="Convert"
-				@click="setPurchaseSection(false)"
-			></DetailsButton>
+		<div
+			class="button-selector"
+			:style="{ left: buttonSelectorOffset + 'px' }"
+		></div>
+		<div class="flex center-children">
+			<div
+				id="buyButton"
+				class="third-width flex center-children vertical-center-children"
+				:class="
+					activeTab === 0
+						? 'button-border-right'
+						: 'button-border-bottom'
+				"
+				@click="setPurchaseSection($event, true, 0)"
+			>
+				<div>Buy</div>
+			</div>
+			<div
+				id="sellButton"
+				class="third-width flex center-children vertical-center-children"
+				:class="
+					activeTab === 1
+						? 'button-border-right button-border-left'
+						: 'button-border-bottom'
+				"
+				@click="setPurchaseSection($event, false, 1)"
+			>
+				<div>Sell</div>
+			</div>
+			<div
+				id="convertButton"
+				class="third-width flex center-children vertical-center-children"
+				:class="
+					activeTab === 2
+						? 'button-border-left'
+						: 'button-border-bottom'
+				"
+				@click="setPurchaseSection($event, false, 2)"
+			>
+				<div>Convert</div>
+			</div>
 		</div>
 		<div class="small-padding">
 			<div v-if="showPurchaseSection">
@@ -63,7 +88,7 @@
 			</div>
 			<div v-else>
 				<div class="small-allaround-padding">
-					<p>Why would you want to do anything but Buy Adyen Coin?</p>
+					<p>Why would you want to do anything but buy Adyen Coin?</p>
 				</div>
 			</div>
 		</div>
@@ -72,11 +97,9 @@
 
 <script lang="ts">
 import { defineComponent } from "vue"
-import DetailsButton from "@/components/DetailsButton.vue"
 
 export default defineComponent({
 	name: "CoinAmount",
-	components: { DetailsButton },
 	methods: {
 		initPurchase(value: number) {
 			this.$emit("update:modelValue", value)
@@ -86,8 +109,33 @@ export default defineComponent({
 			this.inputWidth = 70
 			this.inputFontSize = 62
 		},
-		setPurchaseSection(newVal: boolean) {
+		setPurchaseSection(el: Event, newVal: boolean, tabNum: number) {
+			this.activeTab = tabNum
+			let element = el.target as HTMLInputElement
+			let elId, elWidth
+			if (element.id != "") {
+				elId = element.id
+				elWidth = element.clientWidth
+			} else {
+				elId = element.parentElement?.id
+				elWidth = element.parentElement?.clientWidth
+			}
 			this.showPurchaseSection = newVal
+			if (elWidth == undefined) {
+				elWidth = 0
+			}
+
+			switch (elId) {
+				case "buyButton":
+					this.buttonSelectorOffset = 0
+					break
+				case "sellButton":
+					this.buttonSelectorOffset = elWidth
+					break
+				case "convertButton":
+					this.buttonSelectorOffset = elWidth * 2
+					break
+			}
 		},
 		adjustSize(el: Event) {
 			let target = el.target as HTMLInputElement
@@ -112,7 +160,9 @@ export default defineComponent({
 			purchaseAmount: this.modelValue,
 			inputWidth: 35,
 			inputFontSize: 62,
-			showPurchaseSection: true
+			showPurchaseSection: true,
+			activeTab: 0,
+			buttonSelectorOffset: 0
 		}
 	}
 })
@@ -144,6 +194,36 @@ export default defineComponent({
 
 .button-hover:hover {
 	background: rgb(77, 176, 205);
+}
+
+.third-width {
+	width: 33%;
+	height: 47px;
+	background: var(--background);
+	color: white;
+	cursor: pointer;
+	border: none;
+}
+
+.button-selector {
+	position: relative;
+	top: -2px;
+	height: 3px;
+	width: 33%;
+	border-radius: 1px;
+	background: var(--subtext-header-color);
+}
+
+.button-border-left {
+	border-left: solid 1px var(--thin-border);
+}
+
+.button-border-right {
+	border-right: solid 1px var(--thin-border);
+}
+
+.button-border-bottom {
+	border-bottom: solid 1px var(--thin-border);
 }
 
 .input-placeholder {
