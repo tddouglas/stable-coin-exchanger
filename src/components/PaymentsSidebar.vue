@@ -15,6 +15,7 @@
 <script>
 import "@adyen/adyen-web/dist/adyen.css"
 import "../assets/dropin-dark.css"
+import { v4 as uuidv4 } from "uuid"
 
 let AdyenCheckout
 AdyenCheckout = require("@adyen/adyen-web")
@@ -52,8 +53,12 @@ export default {
 		async startCheckout() {
 			try {
 				// Initiate Sessions
+				let reference = uuidv4()
 				const { response, clientKey } = await this.callServer(
-					"/api/sessions?type=" + this.type
+					"/api/sessions?type=" +
+						this.type +
+						"&reference=" +
+						reference
 				)
 
 				// Set Data variables
@@ -63,6 +68,7 @@ export default {
 				// Create a session ID in local storage so value can be stored and retrieved to finalize checkout
 				localStorage.setItem("sessionID", this.sessionId)
 				localStorage.setItem("clientKey", this.clientKey)
+				localStorage.setItem("reference", reference)
 
 				// Create AdyenCheckout using Sessions response
 				const checkout = await this.createAdyenCheckout(response)
@@ -103,7 +109,6 @@ export default {
 					},
 					card: {
 						hasHolderName: true,
-						holderNameRequired: true,
 						name: "Credit or debit card",
 						amount: {
 							value: 1000,
@@ -120,7 +125,6 @@ export default {
 					}
 				},
 				onPaymentCompleted: (result, component) => {
-					console.log("result: " + result)
 					this.handleServerResponse(result, component)
 				},
 				onError: (error, component) => {
@@ -152,9 +156,15 @@ export default {
 				component.handleAction(res.action)
 			} else {
 				switch (res.resultCode) {
-					case "Authorised":
-						window.location.href = "/result/success"
+					case "Authorised": {
+						let reference = localStorage.getItem("reference")
+						window.location.href =
+							"/result/success?amount=" +
+							this.value +
+							"&reference=" +
+							reference
 						break
+					}
 					case "Pending":
 					case "Received":
 						window.location.href = "/result/pending"

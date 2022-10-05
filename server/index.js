@@ -2,7 +2,6 @@ const express = require("express")
 const consola = require("consola")
 const dotenv = require("dotenv")
 const { createProxyMiddleware } = require("http-proxy-middleware")
-const { v4: uuid } = require("uuid")
 const { hmacValidator } = require("@adyen/api-library")
 const { Client, Config, CheckoutAPI } = require("@adyen/api-library")
 
@@ -46,7 +45,7 @@ const checkout = new CheckoutAPI(client)
 app.post("/api/sessions", async (req, res) => {
 	try {
 		// unique ref for the transaction
-		const orderRef = uuid()
+		const orderRef = req.query.reference
 
 		const protocol = req.socket.encrypted ? "https" : "http"
 		const host = req.get("host")

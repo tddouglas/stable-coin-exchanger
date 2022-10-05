@@ -21,7 +21,7 @@
 						Your order has been successfully placed. <br />Please
 						scan below QR Code to collect your coins.
 					</div>
-					<QRCodeGenerator />
+					<QRCodeGenerator :amount="amount" :reference="reference" />
 				</div>
 				<div v-else-if="type === 'failed'">
 					The payment was refused. Please try a different payment
@@ -54,7 +54,9 @@ export default {
 	},
 	data() {
 		return {
-			type: this.$route.params.type
+			type: this.$route.params.type,
+			amount: this.$route.query.amount,
+			reference: this.$route.query.reference
 		}
 	},
 	components: {
