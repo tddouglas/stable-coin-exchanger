@@ -33,10 +33,12 @@ dotenv.config({
 })
 
 // Adyen Node.js API library boilerplate (configuration, etc.)
-const config = new Config()
+const config = new Config({
+	checkoutEndpoint: process.env.ADYEN_CHECKOUT_ENDPOINT
+})
 config.apiKey = process.env.ADYEN_API_KEY
 const client = new Client({ config })
-client.setEnvironment("TEST") // change to LIVE for production
+// client.setEnvironment("TEST") // change to LIVE for production
 const checkout = new CheckoutAPI(client)
 
 /* ################# API ENDPOINTS ###################### */

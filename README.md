@@ -61,7 +61,7 @@ npm run serve
 ```
 
 **Configure Tomcat URLs:**
-Modify `node_modules/@adyen/api-library/lib/src/client.js` `CHECKOUT_ENDPOINT_TEST` var to point to tomcat version. 
+Set in `ADYEN_CHECKOUT_ENDPOINT` environment variable
 
 TODO: can we build it for production so it can run in the background?
 
@@ -72,6 +72,7 @@ ADYEN_MERCHANT_ACCOUNT="TestMerchant"
 ADYEN_API_KEY="AQEmhmfuXNWTK0Qc+iSEl3cshO..."
 ADYEN_CLIENT_KEY="devl_F73CCZ4Y7NHFRL"
 ADYEN_HMAC_KEY="your_hmac_key_here"
+ADYEN_CHECKOUT_ENDPOINT="https://checkout-test.adyen.com/checkout"
 ```
 
 Open [Stablecoin Exchanger](http://obyte-issuing.peter-miklos.sb01.k8s.adyen.com:8080/)
