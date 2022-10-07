@@ -38,11 +38,6 @@ import CoinAmount from "@/components/CoinAmount.vue"
 export default defineComponent({
 	name: "PurchaseView",
 	components: { Payment, CoinDetails, CoinAmount },
-	watch: {
-		amount(newVal) {
-			console.log("New amount is", newVal)
-		}
-	},
 	data() {
 		return {
 			stableDollar: require("../assets/stable-dollar.svg"),

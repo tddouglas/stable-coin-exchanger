@@ -30,7 +30,7 @@
 		</div>
 		<div>
 			<router-link to="/purchase">
-				<button class="buy-button">Get USDA Coin</button>
+				<button class="btnhover buy-button">Get USDA Coin</button>
 			</router-link>
 		</div>
 	</div>
@@ -129,5 +129,9 @@ export default defineComponent({
 	padding: 20px 25px;
 	min-width: 170px;
 	border-radius: 4px;
+}
+
+.btnhover:hover {
+	background: rgb(77, 176, 205);
 }
 </style>

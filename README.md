@@ -4,6 +4,7 @@
 ```
 npm install
 ```
+## Run Client
 
 ### Compiles and hot-reloads for development
 ```
@@ -12,21 +13,31 @@ npm run serve
 
 ### Compiles and minifies for production
 ```
-npm run build
+npm run build-client
+```
+`dist` directory is now ready to be deployed. Copy `dist` directory content to tomcat server. Vue config expected to 
+be deployed under `/Stablecoin-Exchanger/` but that can be changed in `vue.config.js`
+
+## Run Server
+
+### Test
+
+```
+npm run dev
 ```
 
-### Run your unit tests
+### Prod
 ```
-npm run test:unit
+npm run prod-server
 ```
-
-### Lints and fixes files
+To run in backgroud, use PM2. 
 ```
-npm run lint
+npm install pm2 -g
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Then deploy process in PM2
+```
+pm2 start server/index.js
+```
 
 ## Deployment to sandbox
 
@@ -48,6 +59,9 @@ cd stablecoin-exchanger
 npm --proxy http://sandboxproxy-vip.system.osext1.nlzwo1o.adyen.cloud:3128 install
 npm run serve
 ```
+
+**Configure Tomcat URLs:**
+Modify `node_modules/@adyen/api-library/lib/src/client.js` `CHECKOUT_ENDPOINT_TEST` var to point to tomcat version. 
 
 TODO: can we build it for production so it can run in the background?
 

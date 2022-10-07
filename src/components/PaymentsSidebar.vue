@@ -6,6 +6,7 @@
 				<div class="small-text padding-bottom">{{ value }} USDA</div>
 				<div class="payment-container">
 					<div class="dropin dropin-dark" :ref="type"></div>
+					<medium-spinner v-if="!dropinReady" />
 				</div>
 			</div>
 		</div>
@@ -13,6 +14,8 @@
 </template>
 
 <script>
+import MediumSpinner from "@/components/Spinner.vue"
+import { defineComponent } from "vue"
 import "@adyen/adyen-web/dist/adyen.css"
 import "../assets/dropin-dark.css"
 import { v4 as uuidv4 } from "uuid"
@@ -20,10 +23,11 @@ import { v4 as uuidv4 } from "uuid"
 let AdyenCheckout
 AdyenCheckout = require("@adyen/adyen-web")
 
-export default {
-	components: {},
+export default defineComponent({
+	components: { MediumSpinner },
 	data() {
 		return {
+			dropinReady: false,
 			sessionId: "",
 			redirectResult: "",
 			clientKey: "",
@@ -51,6 +55,8 @@ export default {
 	},
 	methods: {
 		async startCheckout() {
+			// eslint-disable-next-line @typescript-eslint/no-this-alias
+			let vm = this
 			try {
 				// Initiate Sessions
 				let reference = uuidv4()
@@ -74,7 +80,14 @@ export default {
 				const checkout = await this.createAdyenCheckout(response)
 
 				// Create an instance of Drop-in and mount it
-				checkout.create(this.type).mount(this.$refs[this.type])
+				checkout
+					.create(this.type, {
+						onReady() {
+							console.log("On ready triggered", this)
+							vm.dropinReady = true
+						}
+					})
+					.mount(this.$refs[this.type])
 			} catch (error) {
 				console.error(error)
 				alert("Error occurred. Look at console for details")
@@ -108,7 +121,6 @@ export default {
 						showImage: true
 					},
 					card: {
-						hasHolderName: true,
 						name: "Credit or debit card",
 						amount: {
 							value: 1000,
@@ -179,7 +191,7 @@ export default {
 			}
 		}
 	}
-}
+})
 </script>
 
 <style scoped>
